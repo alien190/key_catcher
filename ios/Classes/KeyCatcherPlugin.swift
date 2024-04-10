@@ -75,10 +75,13 @@ public class KeyCatcherPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     }
     
     private func removeVolumeObserver() {
-        audioSession.removeObserver(self,
-                                    forKeyPath: volumeKey)
-        if let volumeView = volumeView {
-            volumeView.removeFromSuperview()
+        
+        if(isObserving){
+            audioSession.removeObserver(self,
+                                        forKeyPath: volumeKey)
+            if let volumeView = volumeView {
+                volumeView.removeFromSuperview()
+            }
         }
         volumeView = nil
         isObserving = false
