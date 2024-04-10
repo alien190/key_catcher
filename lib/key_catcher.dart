@@ -10,7 +10,9 @@ abstract class KeyCatcher {
 
   static Future<void> init(VoidCallback callback) async {
     if (Platform.isIOS) {
-      await _methodChannel.invokeMethod('init');
+      if(_streamSubscription == null) {
+        await _methodChannel.invokeMethod('init');
+      }
       _streamSubscription?.cancel();
       _streamSubscription =
           _eventChannel.receiveBroadcastStream().listen((_) => callback());
